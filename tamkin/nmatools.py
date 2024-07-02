@@ -136,14 +136,14 @@ def write_overlap(freqs1, freqs2, overlap, filename="overlap.csv", unit="au"):
     to_append="w+"   # not append, just overwrite
     with open(filename,to_append) as f:
         [rows,cols] = overlap.shape
-        if unit is "au":
+        if unit == "au":
             # 1. row of freqs2
             print(";"+";".join(str(g) for g in freqs2), file=f)  # this is the same
 
             # 2. start each row with freq of freqs1 and continue with overlaps
             for r in range(rows):
                 print(str(freqs1[r])+";"+";".join(str(g) for g in overlap[r,:].tolist()), file=f)
-        elif unit is "cm1":
+        elif unit == "cm1":
             # 1. row of freqs2
             print(";"+";".join(str(g*centimeter/lightspeed) for g in freqs2), file=f)  # this is the same
 
@@ -228,13 +228,13 @@ def create_blocks_peptide_charmm(filename, label="normal", blocksize=1):
     """
     N, calpha, proline, carbon, oxygen, nitrogen = load_peptide_info_charmm(filename)
 
-    if label is "RTB":
+    if label == "RTB":
         return _calc_blocks_RTB(blocksize, N, calpha, proline, carbon, oxygen, nitrogen)
-    elif label is "dihedral":
+    elif label == "dihedral":
         return _calc_blocks_dihedral(N, calpha, proline, carbon, oxygen, nitrogen)
-    elif label is "RHbending":
+    elif label == "RHbending":
         return _calc_blocks_RHbending(N, calpha, proline, carbon, oxygen, nitrogen)
-    elif label is "normal":
+    elif label == "normal":
         return _calc_blocks_normal(N, calpha, proline, carbon, oxygen, nitrogen)
     else:
         raise NotImplementedError
